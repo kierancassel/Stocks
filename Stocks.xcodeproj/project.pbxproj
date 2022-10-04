@@ -8,21 +8,29 @@
 
 /* Begin PBXBuildFile section */
 		CC040BE528E725E00051A217 /* StocksApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC040BE428E725E00051A217 /* StocksApp.swift */; };
-		CC040BE728E725E00051A217 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC040BE628E725E00051A217 /* ContentView.swift */; };
+		CC040BE728E725E00051A217 /* StockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC040BE628E725E00051A217 /* StockView.swift */; };
 		CC040BE928E725E10051A217 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC040BE828E725E10051A217 /* Assets.xcassets */; };
 		CC040BEC28E725E10051A217 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC040BEB28E725E10051A217 /* Preview Assets.xcassets */; };
 		CC040BEE28E725E10051A217 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC040BED28E725E10051A217 /* Persistence.swift */; };
 		CC040BF128E725E10051A217 /* Stocks.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CC040BEF28E725E10051A217 /* Stocks.xcdatamodeld */; };
+		CC6EB8DF28E9A8DA00F79728 /* StockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC6EB8DE28E9A8DA00F79728 /* StockCell.swift */; };
+		CC6EB8E128E9E69600F79728 /* Stock.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC6EB8E028E9E69600F79728 /* Stock.swift */; };
+		CC6EB8E328E9FC3B00F79728 /* StockViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC6EB8E228E9FC3B00F79728 /* StockViewModel.swift */; };
+		CCE6731928EC7A93006C377F /* AddStockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE6731828EC7A93006C377F /* AddStockView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		CC040BE128E725E00051A217 /* Stocks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stocks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC040BE428E725E00051A217 /* StocksApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksApp.swift; sourceTree = "<group>"; };
-		CC040BE628E725E00051A217 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		CC040BE628E725E00051A217 /* StockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockView.swift; sourceTree = "<group>"; };
 		CC040BE828E725E10051A217 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CC040BEB28E725E10051A217 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		CC040BED28E725E10051A217 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		CC040BF028E725E10051A217 /* Stocks.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Stocks.xcdatamodel; sourceTree = "<group>"; };
+		CC6EB8DE28E9A8DA00F79728 /* StockCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockCell.swift; sourceTree = "<group>"; };
+		CC6EB8E028E9E69600F79728 /* Stock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stock.swift; sourceTree = "<group>"; };
+		CC6EB8E228E9FC3B00F79728 /* StockViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockViewModel.swift; sourceTree = "<group>"; };
+		CCE6731828EC7A93006C377F /* AddStockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStockView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,7 +64,11 @@
 			isa = PBXGroup;
 			children = (
 				CC040BE428E725E00051A217 /* StocksApp.swift */,
-				CC040BE628E725E00051A217 /* ContentView.swift */,
+				CC6EB8E028E9E69600F79728 /* Stock.swift */,
+				CC6EB8E228E9FC3B00F79728 /* StockViewModel.swift */,
+				CC040BE628E725E00051A217 /* StockView.swift */,
+				CC6EB8DE28E9A8DA00F79728 /* StockCell.swift */,
+				CCE6731828EC7A93006C377F /* AddStockView.swift */,
 				CC040BE828E725E10051A217 /* Assets.xcassets */,
 				CC040BED28E725E10051A217 /* Persistence.swift */,
 				CC040BEF28E725E10051A217 /* Stocks.xcdatamodeld */,
@@ -81,6 +93,7 @@
 			buildConfigurationList = CC040BF428E725E10051A217 /* Build configuration list for PBXNativeTarget "Stocks" */;
 			buildPhases = (
 				CC040BDD28E725E00051A217 /* Sources */,
+				CC040C3028E72A770051A217 /* ShellScript */,
 				CC040BDE28E725E00051A217 /* Frameworks */,
 				CC040BDF28E725E00051A217 /* Resources */,
 			);
@@ -138,15 +151,40 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		CC040C3028E72A770051A217 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		CC040BDD28E725E00051A217 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				CC040BEE28E725E10051A217 /* Persistence.swift in Sources */,
-				CC040BE728E725E00051A217 /* ContentView.swift in Sources */,
+				CC6EB8E328E9FC3B00F79728 /* StockViewModel.swift in Sources */,
+				CC040BE728E725E00051A217 /* StockView.swift in Sources */,
+				CC6EB8E128E9E69600F79728 /* Stock.swift in Sources */,
 				CC040BF128E725E10051A217 /* Stocks.xcdatamodeld in Sources */,
+				CCE6731928EC7A93006C377F /* AddStockView.swift in Sources */,
 				CC040BE528E725E00051A217 /* StocksApp.swift in Sources */,
+				CC6EB8DF28E9A8DA00F79728 /* StockCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

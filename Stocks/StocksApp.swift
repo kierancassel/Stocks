@@ -13,7 +13,7 @@ struct StocksApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            StockView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
