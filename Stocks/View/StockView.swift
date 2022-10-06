@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct StockView: View {
-    @ObservedObject var stockViewModel = StockViewModel()
+    @ObservedObject var stockViewModel = StockViewModel(networkManager: PublicNetworkManager())
     var body: some View {
         NavigationView {
             VStack {
@@ -22,14 +22,21 @@ struct StockView: View {
                 }
                 List {
                     ForEach(stockViewModel.stocks) { stock in
-                        StockCell(stock: stock)
+                        StockCell(symbol: stock.symbol ?? "", name: stock.name ?? "",
+                                  price: Double(truncating: stock.price ?? 0),
+                                  change: Double(truncating: stock.change ?? 0),
+                                  changePercent: Double(truncating: stock.changePercent ?? 0))
                     }.onDelete(perform: delete)
+                    if stockViewModel.stocks.count == 0 {
+                        Text("Watchlist empty")
+                    }
                 }
-                NavigationLink(destination: AddStockView()) {
+                NavigationLink(destination: AddStockView(stockViewModel: stockViewModel)) {
                     Text("+Add")
                 }
             }.onAppear {
                 stockViewModel.getStocks()
+                //stockViewModel.updateStocks()
             }
         }
     }
@@ -39,8 +46,7 @@ struct StockView: View {
         return formatter.string(from: Date())
     }
     func delete(offsets: IndexSet) {
-        stockViewModel.stocks.remove(atOffsets: offsets)
-        print(stockViewModel.stocks)
+        stockViewModel.deleteStocks(offsets: offsets)
     }
 }
 struct ContentView_Previews: PreviewProvider {
