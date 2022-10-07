@@ -9,12 +9,12 @@ import SwiftUI
 
 @main
 struct StocksApp: App {
-    let persistenceController = PersistenceController.shared
+    let coreDataService = CoreDataService.shared
 
     var body: some Scene {
         WindowGroup {
             StockView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .environment(\.managedObjectContext, coreDataService.container.viewContext)
         }
     }
 }

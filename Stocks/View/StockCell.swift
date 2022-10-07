@@ -19,7 +19,7 @@ struct StockCell: View {
             }
             Spacer()
             if add == nil {
-                VStack {
+                VStack(alignment: .trailing) {
                     if let price, let changePercent {
                         Text(String(format: "%.2f", price)).fontWeight(.bold)
                         Text((String(format: "%.2f", changePercent)) + "%").font(.footnote).background(

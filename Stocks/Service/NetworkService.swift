@@ -20,10 +20,21 @@ class NetworkService {
 
         subscription = URLSession.shared.dataTaskPublisher(for: url)
             .subscribe(on: DispatchQueue.global())
-            .map { $0.data }
+            .tryMap { output -> Data in
+                guard let response = output.response as? HTTPURLResponse,
+                        response.statusCode >= 200 &&
+                        response.statusCode < 300 else {
+                    throw URLError(.badServerResponse)
+                }
+                return output.data
+            }
             .receive(on: DispatchQueue.main)
             .decode(type: Query.self, decoder: JSONDecoder())
-            .sink { _ in } receiveValue: { [weak self] query in
+            .sink {
+                if case .failure(let error) = $0 {
+                    print(error)
+                }
+            } receiveValue: { [weak self] query in
                 self?.query = query
                 self?.subscription?.cancel()
             }
@@ -37,14 +48,25 @@ class NetworkService {
 
         subscription = URLSession.shared.dataTaskPublisher(for: url)
             .subscribe(on: DispatchQueue.global())
-            .map { $0.data }
+            .tryMap { output -> Data in
+                guard let response = output.response as? HTTPURLResponse,
+                        response.statusCode >= 200 &&
+                        response.statusCode < 300 else {
+                    throw URLError(.badServerResponse)
+                }
+                return output.data
+            }
             .receive(on: DispatchQueue.main)
             .decode(type: Quote.self, decoder: JSONDecoder())
-            .sink { _ in } receiveValue: { [weak self] quote in
+            .sink {
+                if case .failure(let error) = $0 {
+                    print(error)
+                }
+            } receiveValue: { [weak self] quote in
                 stock.price = NSDecimalNumber(string: quote.globalQuote.price)
                 stock.change = NSDecimalNumber(string: quote.globalQuote.change)
                 stock.changePercent = NSDecimalNumber(string: quote.globalQuote.changePercent)
-                PersistenceController.shared.save()
+                CoreDataService.shared.save()
                 self?.subscription?.cancel()
             }
     }

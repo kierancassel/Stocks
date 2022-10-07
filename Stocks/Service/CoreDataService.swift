@@ -1,5 +1,5 @@
 //
-//  Persistence.swift
+//  CoreDataService.swift
 //  Stocks
 //
 //  Created by Kieran Cassel on 30/09/2022.
@@ -9,7 +9,7 @@ import CoreData
 
 class CoreDataService {
     static let shared = CoreDataService()
-    @Published var stocks: [Stock] = []
+    @Published var watchlist: [Stock] = []
 
     static var preview: CoreDataService = {
         let result = CoreDataService(inMemory: true)
@@ -58,8 +58,9 @@ class CoreDataService {
     func fetch() {
         let context = container.viewContext
         let request = Stock.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(key: "userOrder", ascending: true)]
         do {
-            stocks = try context.fetch(request)
+            watchlist = try context.fetch(request)
         } catch { print(error) }
     }
 }

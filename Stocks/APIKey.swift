@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+enum APIKey: String {
+    case key = "8N37GB08FPVZ8CTZ"
+}

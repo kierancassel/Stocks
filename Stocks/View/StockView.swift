@@ -8,49 +8,75 @@
 import SwiftUI
 
 struct StockView: View {
-    @ObservedObject var stockViewModel = StockViewModel(networkManager: PublicNetworkManager())
+    @ObservedObject var viewModel = StockViewModel()
+    @State var isEditing = false
     var body: some View {
-        NavigationView {
+        VStack {
             VStack {
-                HStack {
-                    VStack {
-                        Text("Stocks").font(.title2).fontWeight(.heavy).frame(maxWidth: .infinity, alignment: .leading)
-                        Text(date())
-                            .font(.title2).fontWeight(.heavy).foregroundColor(Color.gray)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }.padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
-                }
-                List {
-                    ForEach(stockViewModel.stocks) { stock in
-                        StockCell(symbol: stock.symbol ?? "", name: stock.name ?? "",
-                                  price: Double(truncating: stock.price ?? 0),
-                                  change: Double(truncating: stock.change ?? 0),
-                                  changePercent: Double(truncating: stock.changePercent ?? 0))
-                    }.onDelete(perform: delete)
-                    if stockViewModel.stocks.count == 0 {
-                        Text("Watchlist empty")
+                Text("Stocks").font(.title2).fontWeight(.heavy).frame(maxWidth: .infinity, alignment: .leading)
+                Text(date())
+                    .font(.title2).fontWeight(.heavy).foregroundColor(Color.gray)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }.padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
+            NavigationView {
+                VStack {
+                    List {
+                        ForEach(viewModel.watchlist) { stock in
+                            StockCell(symbol: stock.symbol ?? "", name: stock.name ?? "",
+                                      price: Double(truncating: stock.price ?? 0),
+                                      change: Double(truncating: stock.change ?? 0),
+                                      changePercent: Double(truncating: stock.changePercent ?? 0))
+                        }
+                        .onDelete(perform: delete)
+                        .onMove(perform: move)
+                        if viewModel.watchlist.count == 0 {
+                            Text("Watchlist empty")
+                        }
                     }
+                    .navigationBarTitle(Text("Watchlist"), displayMode: .inline)
+                    .listStyle(PlainListStyle())
+                    .environment(\.editMode,
+                                  .constant(self.isEditing ? EditMode.active : EditMode.inactive))
+                    .animation(.spring())
+                    .toolbar { toolbar }
                 }
-                NavigationLink(destination: AddStockView(stockViewModel: stockViewModel)) {
-                    Text("+Add")
+                .onAppear {
+                    viewModel.updateStocks()
                 }
-            }.onAppear {
-                stockViewModel.getStocks()
-                //stockViewModel.updateStocks()
             }
         }
     }
+
+    var toolbar: some View {
+        HStack {
+            Button(action: { isEditing.toggle() }) {
+                if self.isEditing {
+                    Text("Done")
+                } else {
+                    Image(systemName: "pencil.circle.fill")
+                }
+            }
+            NavigationLink(destination: AddStockView(viewModel: AddStockViewModel())) {
+                Image(systemName: "plus.circle.fill")
+            }
+        }
+    }
+
     func date() -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "EEEE, d MMM"
         return formatter.string(from: Date())
     }
+    func move(source: IndexSet, destination: Int) {
+        viewModel.moveStock(source: source, destination: destination)
+    }
     func delete(offsets: IndexSet) {
-        stockViewModel.deleteStocks(offsets: offsets)
+        viewModel.deleteStocks(offsets: offsets)
     }
 }
+
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        StockView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        StockView().environment(\.managedObjectContext, CoreDataService.preview.container.viewContext)
     }
 }
