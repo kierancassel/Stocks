@@ -22,13 +22,16 @@ struct StockView: View {
                 VStack {
                     List {
                         ForEach(viewModel.watchlist) { stock in
-                            StockCell(symbol: stock.symbol ?? "", name: stock.name ?? "",
-                                      price: Double(truncating: stock.price ?? 0),
-                                      change: Double(truncating: stock.change ?? 0),
-                                      changePercent: Double(truncating: stock.changePercent ?? 0))
+                            NavigationLink(destination: StockDetailView(stock: stock)) {
+                                StockCell(symbol: stock.symbol ?? "", name: stock.name ?? "",
+                                          price: Double(truncating: stock.price ?? 0),
+                                          change: Double(truncating: stock.change ?? 0),
+                                          changePercent: Double(truncating: stock.changePercent ?? 0))
+                            }
                         }
                         .onDelete(perform: delete)
                         .onMove(perform: move)
+//                        .onTapGesture(perform: tap)
                         if viewModel.watchlist.count == 0 {
                             Text("Watchlist empty")
                         }

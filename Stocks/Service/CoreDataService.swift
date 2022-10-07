@@ -26,6 +26,14 @@ class CoreDataService {
         return result
     }()
 
+    static var previewStock: Stock = {
+        let result = CoreDataService(inMemory: true)
+        let viewContext = result.container.viewContext
+        guard let stock = NSEntityDescription.insertNewObject(forEntityName: "Stock", into: viewContext) as? Stock
+        else { return Stock() }
+        return stock
+    }()
+
     let container: NSPersistentContainer
 
     init(inMemory: Bool = false) {

@@ -40,10 +40,12 @@ struct StockCell: View {
 
 struct StockCell_Previews: PreviewProvider {
     static var previews: some View {
-        List {
+        Group {
             StockCell(symbol: "AAPL", name: "Apple Inc.", price: 140, change: 1.99, changePercent: 1.99)
             StockCell(symbol: "AAPL", name: "Apple Inc.", price: 140, change: 1.99, changePercent: -1.99)
             StockCell(symbol: "AAPL", name: "Apple Inc.", add: { _, _  in })
         }
+        .previewLayout(.sizeThatFits)
+        .padding()
     }
 }

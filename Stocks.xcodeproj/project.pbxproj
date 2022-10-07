@@ -21,6 +21,7 @@
 		CCE6732128ECA0EE006C377F /* Quote.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE6732028ECA0EE006C377F /* Quote.swift */; };
 		CCE6732328EF0923006C377F /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE6732228EF0923006C377F /* NetworkService.swift */; };
 		CCE6732928EF5582006C377F /* AddStockViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE6732828EF5582006C377F /* AddStockViewModel.swift */; };
+		CCE6732B28F00D7E006C377F /* StockDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE6732A28F00D7D006C377F /* StockDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		CCE6732028ECA0EE006C377F /* Quote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quote.swift; sourceTree = "<group>"; };
 		CCE6732228EF0923006C377F /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		CCE6732828EF5582006C377F /* AddStockViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStockViewModel.swift; sourceTree = "<group>"; };
+		CCE6732A28F00D7D006C377F /* StockDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				CC040BE628E725E00051A217 /* StockView.swift */,
+				CCE6732A28F00D7D006C377F /* StockDetailView.swift */,
 				CCE6731828EC7A93006C377F /* AddStockView.swift */,
 				CC6EB8DE28E9A8DA00F79728 /* StockCell.swift */,
 			);
@@ -224,6 +227,7 @@
 				CCE6731D28EC9323006C377F /* Query.swift in Sources */,
 				CC040BEE28E725E10051A217 /* CoreDataService.swift in Sources */,
 				CCE6732328EF0923006C377F /* NetworkService.swift in Sources */,
+				CCE6732B28F00D7E006C377F /* StockDetailView.swift in Sources */,
 				CC6EB8E328E9FC3B00F79728 /* StockViewModel.swift in Sources */,
 				CCE6732128ECA0EE006C377F /* Quote.swift in Sources */,
 				CC040BE728E725E00051A217 /* StockView.swift in Sources */,
