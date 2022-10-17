@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct StockView: View {
-    @ObservedObject var viewModel = StockViewModel()
-    @State var isEditing = false
+    @EnvironmentObject private var viewModel: StockViewModel
+    @State private var isEditing = false
     var body: some View {
         VStack {
             VStack {
@@ -31,7 +31,6 @@ struct StockView: View {
                         }
                         .onDelete(perform: delete)
                         .onMove(perform: move)
-//                        .onTapGesture(perform: tap)
                         if viewModel.watchlist.count == 0 {
                             Text("Watchlist empty")
                         }
@@ -59,7 +58,7 @@ struct StockView: View {
                     Image(systemName: "pencil.circle.fill")
                 }
             }
-            NavigationLink(destination: AddStockView(viewModel: AddStockViewModel())) {
+            NavigationLink(destination: AddStockView()) {
                 Image(systemName: "plus.circle.fill")
             }
         }
@@ -80,6 +79,6 @@ struct StockView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        StockView().environment(\.managedObjectContext, CoreDataService.preview.container.viewContext)
+        StockView().environmentObject(StockViewModel())
     }
 }

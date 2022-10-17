@@ -51,7 +51,7 @@ class CoreDataService {
     }
 
     func save() {
-        let context = CoreDataService.shared.container.viewContext
+        let context = container.viewContext
         if context.hasChanges {
             do {
                 try context.save()

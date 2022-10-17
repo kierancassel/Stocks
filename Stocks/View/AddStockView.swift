@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct AddStockView: View {
-    @ObservedObject var viewModel: AddStockViewModel
+    @EnvironmentObject private var viewModel: StockViewModel
     @State private var searchTerm: String = ""
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.presentationMode) private var presentationMode
     var body: some View {
         VStack {
             VStack {
@@ -42,6 +42,6 @@ struct AddStockView: View {
 
 struct AddStockView_Previews: PreviewProvider {
     static var previews: some View {
-        AddStockView(viewModel: AddStockViewModel())
+        AddStockView().environmentObject(StockViewModel())
     }
 }

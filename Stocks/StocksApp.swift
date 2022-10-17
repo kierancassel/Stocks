@@ -14,7 +14,7 @@ struct StocksApp: App {
     var body: some Scene {
         WindowGroup {
             StockView()
-                .environment(\.managedObjectContext, coreDataService.container.viewContext)
+                .environmentObject(StockViewModel())
         }
     }
 }

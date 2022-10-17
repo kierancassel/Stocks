@@ -18,7 +18,11 @@ struct StockCell: View {
                 Text(name).font(.footnote).foregroundColor(Color.gray)
             }
             Spacer()
-            if add == nil {
+            if let add {
+                Button(action: { add(symbol, name) }) {
+                    Image(systemName: "plus.circle")
+                }
+            } else {
                 VStack(alignment: .trailing) {
                     if let price, let changePercent {
                         Text(String(format: "%.2f", price)).fontWeight(.bold)
@@ -26,26 +30,20 @@ struct StockCell: View {
                             RoundedRectangle(cornerRadius: 20).fill(changeColor).frame(width: 50, height: 17))
                     }
                 }
-            } else {
-                if let add {
-                    Button(action: { add(symbol, name) }) {
-                        Image(systemName: "plus.circle")
-                    }
-                }
             }
         }
     }
     var changeColor: Color { changePercent ?? 0 > 0 ? .green : .red }
-}
 
-struct StockCell_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            StockCell(symbol: "AAPL", name: "Apple Inc.", price: 140, change: 1.99, changePercent: 1.99)
-            StockCell(symbol: "AAPL", name: "Apple Inc.", price: 140, change: 1.99, changePercent: -1.99)
-            StockCell(symbol: "AAPL", name: "Apple Inc.", add: { _, _  in })
+    struct StockCell_Previews: PreviewProvider {
+        static var previews: some View {
+            Group {
+                StockCell(symbol: "AAPL", name: "Apple Inc.", price: 140, change: 1.99, changePercent: 1.99)
+                StockCell(symbol: "AAPL", name: "Apple Inc.", price: 140, change: 1.99, changePercent: -1.99)
+                StockCell(symbol: "AAPL", name: "Apple Inc.", add: { _, _  in })
+            }
+            .previewLayout(.sizeThatFits)
+            .padding()
         }
-        .previewLayout(.sizeThatFits)
-        .padding()
     }
 }

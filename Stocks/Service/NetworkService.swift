@@ -40,34 +40,11 @@ class NetworkService {
             }
     }
 
-    func updateStock(stock: Stock) {
+    func updateStock(stock: Stock, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
         guard let symbol = stock.symbol else { return }
         let urlString: String = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + symbol
         + "&apikey=" + APIKey.key.rawValue
         guard let url = URL(string: urlString) else { return }
-
-        subscription = URLSession.shared.dataTaskPublisher(for: url)
-            .subscribe(on: DispatchQueue.global())
-            .tryMap { output -> Data in
-                guard let response = output.response as? HTTPURLResponse,
-                        response.statusCode >= 200 &&
-                        response.statusCode < 300 else {
-                    throw URLError(.badServerResponse)
-                }
-                return output.data
-            }
-            .receive(on: DispatchQueue.main)
-            .decode(type: Quote.self, decoder: JSONDecoder())
-            .sink {
-                if case .failure(let error) = $0 {
-                    print(error)
-                }
-            } receiveValue: { [weak self] quote in
-                stock.price = NSDecimalNumber(string: quote.globalQuote.price)
-                stock.change = NSDecimalNumber(string: quote.globalQuote.change)
-                stock.changePercent = NSDecimalNumber(string: quote.globalQuote.changePercent)
-                CoreDataService.shared.save()
-                self?.subscription?.cancel()
-            }
+        URLSession.shared.dataTask(with: url, completionHandler: completionHandler).resume()
     }
 }
