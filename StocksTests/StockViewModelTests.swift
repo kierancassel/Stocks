@@ -10,9 +10,18 @@ import XCTest
 
 final class StockViewModelTests: XCTestCase {
 
-    let networkService = MockNetworkService()
+    let stockDataService = MockStockDataService()
+    var stockViewModel: StockViewModel!
 
-    func testUpdateStocks() throws {
+    override func setUpWithError() throws {
+        stockViewModel = StockViewModel(networkService: MockStockDataService())
+    }
 
+    func testQueryStocks() throws {
+        stockViewModel.queryStocks(searchTerm: "test")
+        XCTAssert(stockViewModel.query?.bestMatches[0].symbol == "AAPL")
+        XCTAssert(stockViewModel.query?.bestMatches[0].name == "Apple Inc.")
+        XCTAssert(stockViewModel.query?.bestMatches[1].symbol == "MSFT")
+        XCTAssert(stockViewModel.query?.bestMatches[1].name == "Microsoft Corporation")
     }
 }

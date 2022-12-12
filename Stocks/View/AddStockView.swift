@@ -42,6 +42,6 @@ struct AddStockView: View {
 
 struct AddStockView_Previews: PreviewProvider {
     static var previews: some View {
-        AddStockView().environmentObject(StockViewModel())
+        AddStockView().environmentObject(StockViewModel(networkService: AlphaVantageService()))
     }
 }

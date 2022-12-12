@@ -14,7 +14,7 @@ struct StocksApp: App {
     var body: some Scene {
         WindowGroup {
             StockView()
-                .environmentObject(StockViewModel())
+                .environmentObject(StockViewModel(networkService: AlphaVantageService()))
         }
     }
 }

@@ -1,0 +1,12 @@
+//
+//  Staging.xcconfig
+//  Stocks
+//
+//  Created by Kieran Cassel on 09/12/2022.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+API_URL = https:/${}/alphavantage.co/query
+API_KEY = 8N37GB08FPVZ8CTZ

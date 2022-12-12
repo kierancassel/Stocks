@@ -12,18 +12,15 @@ import CoreData
 class StockViewModel: ObservableObject {
     @Published var watchlist: [Stock] = []
     @Published var query: Query?
-    private let networkService = NetworkService()
+    @Published var error: Bool = false
+    private let networkService: StockDataService
     private var cancellables = Set<AnyCancellable>()
 
-    init() {
+    init(networkService: StockDataService) {
+        self.networkService = networkService
         CoreDataService.shared.$watchlist
             .sink { [weak self] stocks in
                 self?.watchlist = stocks
-            }
-            .store(in: &cancellables)
-        networkService.$query
-            .sink { [weak self] query in
-                self?.query = query
             }
             .store(in: &cancellables)
     }
@@ -33,33 +30,34 @@ class StockViewModel: ObservableObject {
     }
 
     func updateStock(stock: Stock) {
-        networkService.updateStock(stock: stock) { data, response, error in
-            if let error {
-                print(error)
-                return
-            }
-            guard let response = response as? HTTPURLResponse,
-                    response.statusCode >= 200 &&
-                    response.statusCode < 300 else {
-                print("Bad response")
-                return
-            }
-            if let data {
-                do {
-                    let quote = try JSONDecoder().decode(Quote.self, from: data)
-                    stock.price = NSDecimalNumber(string: quote.globalQuote.price)
-                    stock.change = NSDecimalNumber(string: quote.globalQuote.change)
-                    stock.changePercent = NSDecimalNumber(string: quote.globalQuote.changePercent)
-                } catch { print("Error parsing JSON") }
-            }
-            DispatchQueue.main.async {
+        guard let symbol = stock.symbol else { return }
+        networkService.updateStock(symbol: symbol)
+            .sink { self.handleCompletion(completion: $0)}
+             receiveValue: { quote in
+                stock.price = NSDecimalNumber(string: quote.globalQuote.price)
+                stock.change = NSDecimalNumber(string: quote.globalQuote.change)
+                stock.changePercent = NSDecimalNumber(string: quote.globalQuote.changePercent)
                 CoreDataService.shared.save()
-            }
-        }
+            }.cancel()
     }
 
     func queryStocks(searchTerm: String) {
         networkService.queryStocks(searchTerm: searchTerm)
+            .sink { completion in
+                if case let .failure(error) = completion {
+                    print(error)
+                    self.error = true
+                }
+            } receiveValue: { data in
+                self.query = data
+            }.cancel()
+    }
+
+    func handleCompletion(completion: Subscribers.Completion<Error>) {
+        if case let .failure(error) = completion {
+            print(error)
+            self.error = true
+        }
     }
 
     func addStock(symbol: String, name: String) {

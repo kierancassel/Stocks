@@ -45,6 +45,9 @@ struct StockView: View {
                 .onAppear {
                     viewModel.updateStocks()
                 }
+                .alert("A network error occured", isPresented: $viewModel.error) {
+                    Button("OK", role: .cancel) { viewModel.error = false}
+                }
             }
         }
     }
@@ -79,6 +82,6 @@ struct StockView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        StockView().environmentObject(StockViewModel())
+        StockView().environmentObject(StockViewModel(networkService: AlphaVantageService()))
     }
 }
