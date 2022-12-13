@@ -8,5 +8,5 @@
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
 
-API_URL = https:/${}/alphavantage.co/query
-API_KEY = 8N37GB08FPVZ8CTZ
+API_URL = https:/${}/cloud.iexapis.com/stable
+API_KEY = pk_4881907d34784685973af1b3696e63ed

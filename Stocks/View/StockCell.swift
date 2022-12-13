@@ -9,14 +9,23 @@ import SwiftUI
 
 struct StockCell: View {
     var symbol, name: String
+    var logoURL: String?
     var price, change, changePercent: Double?
     var add: ((String, String) -> Void)?
     var body: some View {
         HStack {
+            if let logoURL {
+                AsyncImage(url: URL(string: logoURL)) { image in
+                    image.resizable().aspectRatio(contentMode: .fit)
+                } placeholder: {
+                    ProgressView()
+                }
+                .frame(width: 50, height: 50)
+            }
             VStack(alignment: .leading) {
                 Text(symbol).fontWeight(.bold)
                 Text(name).font(.footnote).foregroundColor(Color.gray)
-            }
+            }.padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
             Spacer()
             if let add {
                 Button(action: { add(symbol, name) }) {
@@ -34,12 +43,15 @@ struct StockCell: View {
         }
     }
     var changeColor: Color { changePercent ?? 0 > 0 ? .green : .red }
-
+    
     struct StockCell_Previews: PreviewProvider {
         static var previews: some View {
+            let logoURL = "https://storage.googleapis.com/iexcloud-hl37opg/api/logos/AAPL.png"
             Group {
-                StockCell(symbol: "AAPL", name: "Apple Inc.", price: 140, change: 1.99, changePercent: 1.99)
-                StockCell(symbol: "AAPL", name: "Apple Inc.", price: 140, change: 1.99, changePercent: -1.99)
+                StockCell(symbol: "AAPL", name: "Apple Inc.", logoURL: logoURL,
+                          price: 140, change: 1.99, changePercent: 1.99)
+                StockCell(symbol: "AAPL", name: "Apple Inc.", logoURL: logoURL,
+                          price: 140, change: 1.99, changePercent: -1.99)
                 StockCell(symbol: "AAPL", name: "Apple Inc.", add: { _, _  in })
             }
             .previewLayout(.sizeThatFits)

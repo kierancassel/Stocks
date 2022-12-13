@@ -20,7 +20,7 @@ class MockStockDataService: StockDataService {
         return Result.Publisher(dummyQuery).eraseToAnyPublisher()
     }
 
-    func updateStock(symbol: String) -> AnyPublisher<Quote, Error> {
+    func updateQuote(symbol: String) -> AnyPublisher<Quote, Error> {
         let dummyQuote = Quote(
             globalQuote: GlobalQuote(
                 symbol: "APPL",

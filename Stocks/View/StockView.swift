@@ -10,6 +10,8 @@ import SwiftUI
 struct StockView: View {
     @EnvironmentObject private var viewModel: StockViewModel
     @State private var isEditing = false
+    let autoUpdate = Timer.publish(every: 2, on: .main, in: .common).autoconnect()
+
     var body: some View {
         VStack {
             VStack {
@@ -24,9 +26,10 @@ struct StockView: View {
                         ForEach(viewModel.watchlist) { stock in
                             NavigationLink(destination: StockDetailView(stock: stock)) {
                                 StockCell(symbol: stock.symbol ?? "", name: stock.name ?? "",
-                                          price: Double(truncating: stock.price ?? 0),
-                                          change: Double(truncating: stock.change ?? 0),
-                                          changePercent: Double(truncating: stock.changePercent ?? 0))
+                                          logoURL: stock.logoURL,
+                                          price: stock.price,
+                                          change: stock.change,
+                                          changePercent: stock.changePercent)
                             }
                         }
                         .onDelete(perform: delete)
@@ -42,10 +45,10 @@ struct StockView: View {
                     .animation(.spring())
                     .toolbar { toolbar }
                 }
-                .onAppear {
+                .onReceive(autoUpdate, perform: { _ in
                     viewModel.updateStocks()
-                }
-                .alert("A network error occured", isPresented: $viewModel.error) {
+                })
+                .alert("An error occured", isPresented: $viewModel.error) {
                     Button("OK", role: .cancel) { viewModel.error = false}
                 }
             }
@@ -82,6 +85,6 @@ struct StockView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        StockView().environmentObject(StockViewModel(networkService: AlphaVantageService()))
+        StockView().environmentObject(StockViewModel(networkService: IEXService()))
     }
 }

@@ -10,6 +10,7 @@ import CoreData
 class CoreDataService {
     static let shared = CoreDataService()
     @Published var watchlist: [Stock] = []
+    @Published var symbols: [Symbol] = []
 
     static var preview: CoreDataService = {
         let result = CoreDataService(inMemory: true)
@@ -27,10 +28,13 @@ class CoreDataService {
     }()
 
     static var previewStock: Stock = {
-        let result = CoreDataService(inMemory: true)
-        let viewContext = result.container.viewContext
-        guard let stock = NSEntityDescription.insertNewObject(forEntityName: "Stock", into: viewContext) as? Stock
-        else { return Stock() }
+        let viewContext = CoreDataService.preview.container.viewContext
+        let stock = Stock(context: viewContext)
+        stock.symbol = "AAPL"
+        stock.name = "Apple Inc."
+        stock.price = 140
+        stock.changePercent = 1.99
+        stock.logoURL = "https://storage.googleapis.com/iexcloud-hl37opg/api/logos/AAPL.png"
         return stock
     }()
 
@@ -50,6 +54,88 @@ class CoreDataService {
         fetch()
     }
 
+    func filterSymbols(searchTerm: String) {
+        let context = container.viewContext
+        let request = Symbol.fetchRequest()
+        request.predicate = NSPredicate(format: "name CONTAINS %@", searchTerm)
+        do {
+            symbols = try context.fetch(request)
+        } catch { print("Error filtering symbols") }
+        save()
+    }
+
+    func clearSymbols() {
+        let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Symbol")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
+        do {
+            try container.viewContext.execute(deleteRequest)
+            save()
+        } catch {
+            print("Error clearing symbols")
+        }
+    }
+
+    func storeSymbols(symbols: Symbols) {
+        clearSymbols()
+        symbols.forEach { element in
+            let symbol = Symbol(context: container.viewContext)
+            symbol.name = element.name
+            symbol.symbol = element.symbol
+        }
+        save()
+        fetchSymbols()
+    }
+
+    func fetch() {
+        let context = container.viewContext
+        let request = Stock.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(key: "userOrder", ascending: true)]
+        do {
+            watchlist = try context.fetch(request)
+        } catch { print(error) }
+    }
+
+    func fetchSymbols() {
+        let context = container.viewContext
+        let request = Symbol.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(key: "symbol", ascending: true)]
+        do {
+            symbols = try context.fetch(request)
+        } catch { print(error) }
+    }
+
+    func add(symbol: String, name: String, logoURL: String) {
+        let stock = Stock(context: container.viewContext)
+        stock.symbol = symbol
+        stock.name = name
+        stock.logoURL = logoURL
+        save()
+    }
+
+    func delete(offsets: IndexSet) {
+        offsets.forEach {
+            let stock = watchlist[$0]
+            container.viewContext.delete(stock)
+        }
+        save()
+    }
+
+    func update(stock: Stock, quote: Quote) {
+        stock.price = quote.latestPrice
+        stock.change = quote.change ?? 0
+        stock.changePercent = (quote.changePercent ?? 0) * 100
+        save()
+    }
+
+    func move(source: IndexSet, destination: Int) {
+        var revisedWatchlist: [Stock] = watchlist.map { $0 }
+        revisedWatchlist.move(fromOffsets: source, toOffset: destination )
+        for reverseIndex in stride(from: revisedWatchlist.count - 1, through: 0, by: -1) {
+            revisedWatchlist[reverseIndex].userOrder = Int16(reverseIndex)
+        }
+        save()
+    }
+
     func save() {
         let context = container.viewContext
         if context.hasChanges {
@@ -61,14 +147,5 @@ class CoreDataService {
             }
             fetch()
         }
-    }
-
-    func fetch() {
-        let context = container.viewContext
-        let request = Stock.fetchRequest()
-        request.sortDescriptors = [NSSortDescriptor(key: "userOrder", ascending: true)]
-        do {
-            watchlist = try context.fetch(request)
-        } catch { print(error) }
     }
 }

@@ -18,21 +18,25 @@ struct AddStockView: View {
                 Button("Search", action: search).buttonStyle(.borderedProminent)
             }.padding(20)
             List {
-                if let matches = viewModel.query?.bestMatches {
-                    ForEach(matches) { match in
-                        StockCell(symbol: match.symbol, name: match.name,
+                if let symbols = viewModel.symbols {
+                    ForEach(symbols) { symbol in
+                        StockCell(symbol: symbol.symbol ?? "", name: symbol.name ?? "",
                                   add: { addPressed(symbol: $0, name: $1) })
                     }
-                    if matches.count == 0 {
+                    if symbols.count == 0 {
                         Text("No results found")
                     }
                 }
             }.listStyle(PlainListStyle())
-        }.animation(.spring())
+        }
+        .animation(.spring())
+        .onAppear {
+            viewModel.getSymbols()
+        }
     }
 
     func search() {
-        viewModel.queryStocks(searchTerm: $searchTerm.wrappedValue)
+        viewModel.searchSymbols(searchTerm: $searchTerm.wrappedValue)
     }
     func addPressed(symbol: String, name: String) {
         viewModel.addStock(symbol: symbol, name: name)
@@ -42,6 +46,6 @@ struct AddStockView: View {
 
 struct AddStockView_Previews: PreviewProvider {
     static var previews: some View {
-        AddStockView().environmentObject(StockViewModel(networkService: AlphaVantageService()))
+        AddStockView().environmentObject(StockViewModel(networkService: IEXService()))
     }
 }

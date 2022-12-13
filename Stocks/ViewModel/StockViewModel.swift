@@ -11,18 +11,41 @@ import CoreData
 
 class StockViewModel: ObservableObject {
     @Published var watchlist: [Stock] = []
-    @Published var query: Query?
+    @Published var symbols: [Symbol] = []
     @Published var error: Bool = false
-    private let networkService: StockDataService
+    private let dataService: StockDataService
     private var cancellables = Set<AnyCancellable>()
 
     init(networkService: StockDataService) {
-        self.networkService = networkService
+        self.dataService = networkService
         CoreDataService.shared.$watchlist
-            .sink { [weak self] stocks in
-                self?.watchlist = stocks
+            .sink { [weak self] watchlist in
+                self?.watchlist = watchlist
             }
             .store(in: &cancellables)
+        CoreDataService.shared.$symbols
+            .sink { [weak self] symbols in
+                self?.symbols = symbols
+            }
+            .store(in: &cancellables)
+    }
+
+    func getSymbols() {
+        if symbols.isEmpty {
+            dataService.getSymbols()
+                .sink { completion in
+                    if case let .failure(error) = completion {
+                        print(error)
+                        self.error = true
+                    }
+                } receiveValue: { data in
+                    CoreDataService.shared.storeSymbols(symbols: data)
+                }.cancel()
+        }
+    }
+
+    func searchSymbols(searchTerm: String) {
+        CoreDataService.shared.filterSymbols(searchTerm: searchTerm)
     }
 
     func updateStocks() {
@@ -31,25 +54,10 @@ class StockViewModel: ObservableObject {
 
     func updateStock(stock: Stock) {
         guard let symbol = stock.symbol else { return }
-        networkService.updateStock(symbol: symbol)
+        dataService.getQuote(symbol: symbol)
             .sink { self.handleCompletion(completion: $0)}
              receiveValue: { quote in
-                stock.price = NSDecimalNumber(string: quote.globalQuote.price)
-                stock.change = NSDecimalNumber(string: quote.globalQuote.change)
-                stock.changePercent = NSDecimalNumber(string: quote.globalQuote.changePercent)
-                CoreDataService.shared.save()
-            }.cancel()
-    }
-
-    func queryStocks(searchTerm: String) {
-        networkService.queryStocks(searchTerm: searchTerm)
-            .sink { completion in
-                if case let .failure(error) = completion {
-                    print(error)
-                    self.error = true
-                }
-            } receiveValue: { data in
-                self.query = data
+                 CoreDataService.shared.update(stock: stock, quote: quote)
             }.cancel()
     }
 
@@ -61,29 +69,23 @@ class StockViewModel: ObservableObject {
     }
 
     func addStock(symbol: String, name: String) {
-        let context = CoreDataService.shared.container.viewContext
-        guard let stock = NSEntityDescription.insertNewObject(forEntityName: "Stock", into: context) as? Stock
-        else { return }
-        stock.symbol = symbol
-        stock.name = name
-        updateStock(stock: stock)
+        dataService.getLogo(symbol: symbol)
+            .sink { completion in
+                if case let .failure(error) = completion {
+                    print(error)
+                    self.error = true
+                }
+            } receiveValue: { data in
+                let logoURL = data.url
+                CoreDataService.shared.add(symbol: symbol, name: name, logoURL: logoURL)
+            }.cancel()
     }
 
     func moveStock(source: IndexSet, destination: Int) {
-        var revisedWatchlist: [Stock] = watchlist.map { $0 }
-        revisedWatchlist.move(fromOffsets: source, toOffset: destination )
-        for reverseIndex in stride(from: revisedWatchlist.count - 1, through: 0, by: -1) {
-            revisedWatchlist[reverseIndex].userOrder = Int16(reverseIndex)
-        }
-        CoreDataService.shared.save()
+        CoreDataService.shared.move(source: source, destination: destination)
     }
 
     func deleteStocks(offsets: IndexSet) {
-        let context = CoreDataService.shared.container.viewContext
-        offsets.forEach {
-            let stock = watchlist[$0]
-            context.delete(stock)
-            CoreDataService.shared.save()
-        }
+        CoreDataService.shared.delete(offsets: offsets)
     }
 }
