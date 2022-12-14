@@ -29,7 +29,6 @@ struct AddStockView: View {
                 }
             }.listStyle(PlainListStyle())
         }
-        .animation(.spring())
         .onAppear {
             viewModel.getSymbols()
         }
@@ -46,6 +45,6 @@ struct AddStockView: View {
 
 struct AddStockView_Previews: PreviewProvider {
     static var previews: some View {
-        AddStockView().environmentObject(StockViewModel(networkService: IEXService()))
+        AddStockView().environmentObject(StockViewModel(dataService: IEXService(networkManager: NetworkManager())))
     }
 }

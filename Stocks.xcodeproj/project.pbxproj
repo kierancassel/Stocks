@@ -22,6 +22,11 @@
 		CCB9BDF62948A0B400004B59 /* Quote.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB9BDF52948A0B400004B59 /* Quote.swift */; };
 		CCB9BDFA2948A8B900004B59 /* Symbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB9BDF92948A8B900004B59 /* Symbols.swift */; };
 		CCB9BDFC2948E4B600004B59 /* Logo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB9BDFB2948E4B600004B59 /* Logo.swift */; };
+		CCB9BDFE2949DC8900004B59 /* MockNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB9BDFD2949DC8900004B59 /* MockNetworkManager.swift */; };
+		CCB9BE00294A17C900004B59 /* IEXServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB9BDFF294A17C900004B59 /* IEXServiceTests.swift */; };
+		CCB9BE03294A214200004B59 /* Symbols.json in Resources */ = {isa = PBXBuildFile; fileRef = CCB9BE02294A214200004B59 /* Symbols.json */; };
+		CCB9BE05294A2DA600004B59 /* Quote.json in Resources */ = {isa = PBXBuildFile; fileRef = CCB9BE04294A2DA600004B59 /* Quote.json */; };
+		CCB9BE07294A2DE500004B59 /* Logo.json in Resources */ = {isa = PBXBuildFile; fileRef = CCB9BE06294A2DE500004B59 /* Logo.json */; };
 		CCE6731928EC7A93006C377F /* AddStockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE6731828EC7A93006C377F /* AddStockView.swift */; };
 		CCE6732328EF0923006C377F /* StockDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE6732228EF0923006C377F /* StockDataService.swift */; };
 		CCE6732B28F00D7E006C377F /* StockDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE6732A28F00D7D006C377F /* StockDetailView.swift */; };
@@ -64,6 +69,11 @@
 		CCB9BDF52948A0B400004B59 /* Quote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quote.swift; sourceTree = "<group>"; };
 		CCB9BDF92948A8B900004B59 /* Symbols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Symbols.swift; sourceTree = "<group>"; };
 		CCB9BDFB2948E4B600004B59 /* Logo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logo.swift; sourceTree = "<group>"; };
+		CCB9BDFD2949DC8900004B59 /* MockNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkManager.swift; sourceTree = "<group>"; };
+		CCB9BDFF294A17C900004B59 /* IEXServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IEXServiceTests.swift; sourceTree = "<group>"; };
+		CCB9BE02294A214200004B59 /* Symbols.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Symbols.json; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.json; };
+		CCB9BE04294A2DA600004B59 /* Quote.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Quote.json; sourceTree = "<group>"; };
+		CCB9BE06294A2DE500004B59 /* Logo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Logo.json; sourceTree = "<group>"; };
 		CCE6731828EC7A93006C377F /* AddStockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStockView.swift; sourceTree = "<group>"; };
 		CCE6732228EF0923006C377F /* StockDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDataService.swift; sourceTree = "<group>"; };
 		CCE6732A28F00D7D006C377F /* StockDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDetailView.swift; sourceTree = "<group>"; };
@@ -126,7 +136,7 @@
 				CCE6732728EF0A51006C377F /* ViewModel */,
 				CCE6732628EF0A0D006C377F /* View */,
 				CC040BEF28E725E10051A217 /* Stocks.xcdatamodeld */,
-				CCB9BDE72943A6DB00004B59 /* Resources */,
+				CCB9BDE72943A6DB00004B59 /* Resource */,
 			);
 			path = Stocks;
 			sourceTree = "<group>";
@@ -139,14 +149,14 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		CCB9BDE72943A6DB00004B59 /* Resources */ = {
+		CCB9BDE72943A6DB00004B59 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
 				CCB9BDE82943A74300004B59 /* Config */,
 				CC040BE828E725E10051A217 /* Assets.xcassets */,
 				CC040BEA28E725E10051A217 /* Preview Content */,
 			);
-			path = Resources;
+			path = Resource;
 			sourceTree = "<group>";
 		};
 		CCB9BDE82943A74300004B59 /* Config */ = {
@@ -165,6 +175,18 @@
 				CCB9BDED294743AD00004B59 /* NetworkManager.swift */,
 			);
 			path = Utility;
+			sourceTree = "<group>";
+		};
+		CCB9BE01294A17CD00004B59 /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				CCF2E09928F33956007EC0E0 /* MockStockDataService.swift */,
+				CCB9BDFD2949DC8900004B59 /* MockNetworkManager.swift */,
+				CCB9BE02294A214200004B59 /* Symbols.json */,
+				CCB9BE04294A2DA600004B59 /* Quote.json */,
+				CCB9BE06294A2DE500004B59 /* Logo.json */,
+			);
+			path = Mock;
 			sourceTree = "<group>";
 		};
 		CCE6732428EF0962006C377F /* Service */ = {
@@ -211,7 +233,8 @@
 			isa = PBXGroup;
 			children = (
 				CCF2E09728F338F5007EC0E0 /* StockViewModelTests.swift */,
-				CCF2E09928F33956007EC0E0 /* MockStockDataService.swift */,
+				CCB9BDFF294A17C900004B59 /* IEXServiceTests.swift */,
+				CCB9BE01294A17CD00004B59 /* Mock */,
 			);
 			path = StocksTests;
 			sourceTree = "<group>";
@@ -331,6 +354,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CCB9BE05294A2DA600004B59 /* Quote.json in Resources */,
+				CCB9BE03294A214200004B59 /* Symbols.json in Resources */,
+				CCB9BE07294A2DE500004B59 /* Logo.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -391,7 +417,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CCB9BDFE2949DC8900004B59 /* MockNetworkManager.swift in Sources */,
 				CCF2E09A28F33956007EC0E0 /* MockStockDataService.swift in Sources */,
+				CCB9BE00294A17C900004B59 /* IEXServiceTests.swift in Sources */,
 				CCF2E09828F338F5007EC0E0 /* StockViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -541,11 +569,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Stocks/Resources/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Stocks/Resource/Preview Content\"";
 				DEVELOPMENT_TEAM = H4339MT68D;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Stocks/Resources/Config/Info.plist;
+				INFOPLIST_FILE = Stocks/Resource/Config/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -572,11 +600,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Stocks/Resources/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Stocks/Resource/Preview Content\"";
 				DEVELOPMENT_TEAM = H4339MT68D;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Stocks/Resources/Config/Info.plist;
+				INFOPLIST_FILE = Stocks/Resource/Config/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

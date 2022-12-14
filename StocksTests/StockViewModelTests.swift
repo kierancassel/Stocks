@@ -14,14 +14,17 @@ final class StockViewModelTests: XCTestCase {
     var stockViewModel: StockViewModel!
 
     override func setUpWithError() throws {
-        stockViewModel = StockViewModel(networkService: MockStockDataService())
+        stockViewModel = StockViewModel(dataService: stockDataService)
     }
 
-    func testQueryStocks() throws {
-        stockViewModel.queryStocks(searchTerm: "test")
-        XCTAssert(stockViewModel.query?.bestMatches[0].symbol == "AAPL")
-        XCTAssert(stockViewModel.query?.bestMatches[0].name == "Apple Inc.")
-        XCTAssert(stockViewModel.query?.bestMatches[1].symbol == "MSFT")
-        XCTAssert(stockViewModel.query?.bestMatches[1].name == "Microsoft Corporation")
+    func testGetSymbols() throws {
+        stockViewModel.getSymbols()
+        XCTAssert(stockViewModel.symbols[0].symbol == "AAPL")
+        XCTAssert(stockViewModel.symbols[0].name == "Apple Inc")
+    }
+
+    func testSearchSymbols() throws {
+        stockViewModel.searchSymbols(searchTerm: "Apple")
+        XCTAssert(stockViewModel.symbols.count == 1)
     }
 }

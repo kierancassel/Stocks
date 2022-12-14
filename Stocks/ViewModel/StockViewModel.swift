@@ -16,8 +16,8 @@ class StockViewModel: ObservableObject {
     private let dataService: StockDataService
     private var cancellables = Set<AnyCancellable>()
 
-    init(networkService: StockDataService) {
-        self.dataService = networkService
+    init(dataService: StockDataService) {
+        self.dataService = dataService
         CoreDataService.shared.$watchlist
             .sink { [weak self] watchlist in
                 self?.watchlist = watchlist
@@ -33,14 +33,12 @@ class StockViewModel: ObservableObject {
     func getSymbols() {
         if symbols.isEmpty {
             dataService.getSymbols()
-                .sink { completion in
-                    if case let .failure(error) = completion {
-                        print(error)
-                        self.error = true
-                    }
-                } receiveValue: { data in
-                    CoreDataService.shared.storeSymbols(symbols: data)
+                .sink { self.handleCompletion(completion: $0) }
+                receiveValue: {
+                    CoreDataService.shared.storeSymbols(symbols: $0)
                 }.cancel()
+        } else {
+            CoreDataService.shared.fetchSymbols()
         }
     }
 
@@ -49,43 +47,54 @@ class StockViewModel: ObservableObject {
     }
 
     func updateStocks() {
-        watchlist.forEach { updateStock(stock: $0) }
+        var stockQuotes: [Stock: Quote] = [:]
+        let updateGroup = DispatchGroup()
+        watchlist.forEach { stock in
+            updateGroup.enter()
+            guard let symbol = stock.symbol else { return }
+            dataService.getQuote(symbol: symbol)
+                .sink { self.handleCompletion(completion: $0) }
+                 receiveValue: {
+                     stockQuotes[stock] = $0
+                     updateGroup.leave()
+                }.cancel()
+        }
+        updateGroup.notify(queue: .main) {
+            CoreDataService.shared.updateStocks(stockQuotes: stockQuotes)
+        }
     }
 
     func updateStock(stock: Stock) {
         guard let symbol = stock.symbol else { return }
         dataService.getQuote(symbol: symbol)
-            .sink { self.handleCompletion(completion: $0)}
-             receiveValue: { quote in
-                 CoreDataService.shared.update(stock: stock, quote: quote)
+            .sink { self.handleCompletion(completion: $0) }
+             receiveValue: {
+                 CoreDataService.shared.updateStock(stock: stock, quote: $0)
             }.cancel()
-    }
-
-    func handleCompletion(completion: Subscribers.Completion<Error>) {
-        if case let .failure(error) = completion {
-            print(error)
-            self.error = true
-        }
     }
 
     func addStock(symbol: String, name: String) {
         dataService.getLogo(symbol: symbol)
-            .sink { completion in
-                if case let .failure(error) = completion {
-                    print(error)
-                    self.error = true
-                }
-            } receiveValue: { data in
-                let logoURL = data.url
-                CoreDataService.shared.add(symbol: symbol, name: name, logoURL: logoURL)
+            .sink { self.handleCompletion(completion: $0) }
+            receiveValue: {
+                let logoURL = $0.url
+                CoreDataService.shared.addStock(symbol: symbol, name: name, logoURL: logoURL)
+                self.updateStocks()
             }.cancel()
     }
 
     func moveStock(source: IndexSet, destination: Int) {
-        CoreDataService.shared.move(source: source, destination: destination)
+        CoreDataService.shared.moveStock(source: source, destination: destination)
     }
 
     func deleteStocks(offsets: IndexSet) {
-        CoreDataService.shared.delete(offsets: offsets)
+        CoreDataService.shared.deleteStock(offsets: offsets)
+    }
+
+    private func handleCompletion(completion: Subscribers.Completion<Error>) {
+        if case let .failure(error) = completion {
+            print(error)
+            self.error = true
+        }
     }
 }

@@ -8,16 +8,20 @@
 import Foundation
 import Combine
 
-class NetworkManager {
-    static func request(url: URL) -> AnyPublisher<Data, Error> {
+protocol NetworkManagerProtocol {
+    func request(url: URL) -> AnyPublisher<Data, Error>
+}
+
+class NetworkManager: NetworkManagerProtocol {
+    func request(url: URL) -> AnyPublisher<Data, Error> {
         return URLSession.shared.dataTaskPublisher(for: url)
             .subscribe(on: DispatchQueue.global())
-            .tryMap({ try handleResponse(output: $0) })
+            .tryMap({ try self.handleResponse(output: $0) })
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
 
-    static func handleResponse(output: URLSession.DataTaskPublisher.Output) throws -> Data {
+    private func handleResponse(output: URLSession.DataTaskPublisher.Output) throws -> Data {
         if let response = output.response as? HTTPURLResponse {
             guard (200..<300) ~= response.statusCode else {
                 throw NetworkManagerError.invalidServerResponse(response.statusCode)

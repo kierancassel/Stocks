@@ -42,7 +42,6 @@ struct StockView: View {
                     .listStyle(PlainListStyle())
                     .environment(\.editMode,
                                   .constant(self.isEditing ? EditMode.active : EditMode.inactive))
-                    .animation(.spring())
                     .toolbar { toolbar }
                 }
                 .onReceive(autoUpdate, perform: { _ in
@@ -57,13 +56,15 @@ struct StockView: View {
 
     var toolbar: some View {
         HStack {
-            Button(action: { isEditing.toggle() }) {
+            Button(action: {
+                isEditing.toggle()
+            }, label: {
                 if self.isEditing {
                     Text("Done")
                 } else {
                     Image(systemName: "pencil.circle.fill")
                 }
-            }
+            })
             NavigationLink(destination: AddStockView()) {
                 Image(systemName: "plus.circle.fill")
             }
@@ -85,6 +86,6 @@ struct StockView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        StockView().environmentObject(StockViewModel(networkService: IEXService()))
+        StockView().environmentObject(StockViewModel(dataService: IEXService(networkManager: NetworkManager())))
     }
 }

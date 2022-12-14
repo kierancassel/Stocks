@@ -14,7 +14,7 @@ struct StocksApp: App {
     var body: some Scene {
         WindowGroup {
             StockView()
-                .environmentObject(StockViewModel(networkService: IEXService()))
+                .environmentObject(StockViewModel(dataService: IEXService(networkManager: NetworkManager())))
         }
     }
 }

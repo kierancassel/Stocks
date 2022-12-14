@@ -21,20 +21,14 @@ struct StockDetailView: View {
                     }
                     .frame(width: 100, height: 100)
                 }
-                Spacer()
                 VStack(alignment: .leading) {
                     Text("$" + (stock.symbol ?? ""))
                     Text("$" + String(format: "%.2f", stock.price))
                         .font(.title)
+                    Text((String(format: "%.2f", stock.changePercent)) + "%")
+                        .font(.footnote)
+                        .background(RoundedRectangle(cornerRadius: 20).fill(changeColor).frame(width: 50, height: 20))
                 }
-            }
-            .padding(.bottom, 20)
-            HStack {
-                Text((String(format: "%.2f", stock.changePercent)) + "%")
-                    .font(.footnote)
-                    .padding(5)
-                    .background(RoundedRectangle(cornerRadius: 20).fill(changeColor).frame(width: 50, height: 20))
-                Spacer()
             }
             Spacer()
         }
@@ -44,7 +38,6 @@ struct StockDetailView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
-
 
 struct StockDetailView_Previews: PreviewProvider {
     static var previews: some View {

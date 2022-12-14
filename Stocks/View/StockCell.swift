@@ -12,6 +12,8 @@ struct StockCell: View {
     var logoURL: String?
     var price, change, changePercent: Double?
     var add: ((String, String) -> Void)?
+    var changeColor: Color { changePercent ?? 0 > 0 ? .green : .red }
+
     var body: some View {
         HStack {
             if let logoURL {
@@ -28,9 +30,12 @@ struct StockCell: View {
             }.padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
             Spacer()
             if let add {
-                Button(action: { add(symbol, name) }) {
+                Button(action: {
+                    add(symbol, name)
+
+                }, label: {
                     Image(systemName: "plus.circle")
-                }
+                })
             } else {
                 VStack(alignment: .trailing) {
                     if let price, let changePercent {
@@ -42,8 +47,7 @@ struct StockCell: View {
             }
         }
     }
-    var changeColor: Color { changePercent ?? 0 > 0 ? .green : .red }
-    
+
     struct StockCell_Previews: PreviewProvider {
         static var previews: some View {
             let logoURL = "https://storage.googleapis.com/iexcloud-hl37opg/api/logos/AAPL.png"

@@ -18,7 +18,7 @@ struct Quote: Codable {
     let iexOpen: Double?
     let iexOpenTime: Int?
     let lastTradeTime: Int?
-    let latestPrice: Double
+    let latestPrice: Double?
     let latestSource, latestTime: String?
     let latestUpdate: Int?
     let marketCap: Int?

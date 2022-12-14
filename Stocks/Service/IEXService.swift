@@ -9,10 +9,16 @@ import Foundation
 import Combine
 
 class IEXService: StockDataService {
+    private let networkManager: NetworkManagerProtocol
+
+    init(networkManager: NetworkManagerProtocol) {
+        self.networkManager = networkManager
+    }
+
     func getSymbols() -> AnyPublisher<Symbols, Error> {
         guard let url = URL(string: AppConfig.apiURL + "/ref-data/symbols" + "?token=" + AppConfig.apiKey)
         else { return Fail(error: StockDataServiceError.invalidURL).eraseToAnyPublisher() }
-        return NetworkManager.request(url: url)
+        return networkManager.request(url: url)
             .decode(type: Symbols.self, decoder: JSONDecoder())
             .mapError { error -> StockDataServiceError in
                 if let decodingError = error as? DecodingError {
@@ -27,7 +33,7 @@ class IEXService: StockDataService {
         guard let url = URL(string: AppConfig.apiURL + "/stock/" + symbol
                             + "/quote" + "?token=" + AppConfig.apiKey)
         else { return Fail(error: StockDataServiceError.invalidURL).eraseToAnyPublisher() }
-        return NetworkManager.request(url: url)
+        return networkManager.request(url: url)
             .decode(type: Quote.self, decoder: JSONDecoder())
             .mapError { error -> StockDataServiceError in
                 if let decodingError = error as? DecodingError {
@@ -42,7 +48,7 @@ class IEXService: StockDataService {
         guard let url = URL(string: AppConfig.apiURL + "/stock/" + symbol
                             + "/logo" + "?token=" + AppConfig.apiKey)
         else { return Fail(error: StockDataServiceError.invalidURL).eraseToAnyPublisher() }
-        return NetworkManager.request(url: url)
+        return networkManager.request(url: url)
             .decode(type: Logo.self, decoder: JSONDecoder())
             .mapError { error -> StockDataServiceError in
                 if let decodingError = error as? DecodingError {

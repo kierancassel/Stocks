@@ -40,7 +40,7 @@ class CoreDataService {
 
     let container: NSPersistentContainer
 
-    init(inMemory: Bool = false) {
+    private init(inMemory: Bool = false) {
         container = NSPersistentContainer(name: "Stocks")
         if inMemory {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
@@ -51,8 +51,70 @@ class CoreDataService {
             }
         })
         container.viewContext.automaticallyMergesChangesFromParent = true
-        fetch()
+        fetchStocks()
+        fetchSymbols()
     }
+
+    private func save() {
+        let context = container.viewContext
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                let nserror = error as NSError
+                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+            }
+        }
+    }
+
+    // MARK: Watchlist functions
+
+    func addStock(symbol: String, name: String, logoURL: String) {
+        let stock = Stock(context: container.viewContext)
+        stock.symbol = symbol
+        stock.name = name
+        stock.logoURL = logoURL
+        save()
+        fetchStocks()
+    }
+
+    func deleteStock(offsets: IndexSet) {
+        offsets.forEach {
+            let stock = watchlist[$0]
+            container.viewContext.delete(stock)
+        }
+        save()
+        fetchStocks()
+    }
+
+    func updateStocks(stockQuotes: [Stock: Quote]) {
+        for (stock, quote) in stockQuotes {
+            stock.price = quote.latestPrice ?? 0
+            stock.change = quote.change ?? 0
+            stock.changePercent = (quote.changePercent ?? 0) * 100
+        }
+        save()
+        fetchStocks()
+    }
+
+    func updateStock(stock: Stock, quote: Quote) {
+        stock.price = quote.latestPrice ?? 0
+        stock.change = quote.change ?? 0
+        stock.changePercent = (quote.changePercent ?? 0) * 100
+        save()
+        fetchStocks()
+    }
+
+    func moveStock(source: IndexSet, destination: Int) {
+        var revisedWatchlist: [Stock] = watchlist.map { $0 }
+        revisedWatchlist.move(fromOffsets: source, toOffset: destination )
+        for reverseIndex in stride(from: revisedWatchlist.count - 1, through: 0, by: -1) {
+            revisedWatchlist[reverseIndex].userOrder = Int16(reverseIndex)
+        }
+        save()
+    }
+
+    // MARK: Symbols functions
 
     func filterSymbols(searchTerm: String) {
         let context = container.viewContext
@@ -61,7 +123,6 @@ class CoreDataService {
         do {
             symbols = try context.fetch(request)
         } catch { print("Error filtering symbols") }
-        save()
     }
 
     func clearSymbols() {
@@ -86,7 +147,7 @@ class CoreDataService {
         fetchSymbols()
     }
 
-    func fetch() {
+    func fetchStocks() {
         let context = container.viewContext
         let request = Stock.fetchRequest()
         request.sortDescriptors = [NSSortDescriptor(key: "userOrder", ascending: true)]
@@ -102,50 +163,5 @@ class CoreDataService {
         do {
             symbols = try context.fetch(request)
         } catch { print(error) }
-    }
-
-    func add(symbol: String, name: String, logoURL: String) {
-        let stock = Stock(context: container.viewContext)
-        stock.symbol = symbol
-        stock.name = name
-        stock.logoURL = logoURL
-        save()
-    }
-
-    func delete(offsets: IndexSet) {
-        offsets.forEach {
-            let stock = watchlist[$0]
-            container.viewContext.delete(stock)
-        }
-        save()
-    }
-
-    func update(stock: Stock, quote: Quote) {
-        stock.price = quote.latestPrice
-        stock.change = quote.change ?? 0
-        stock.changePercent = (quote.changePercent ?? 0) * 100
-        save()
-    }
-
-    func move(source: IndexSet, destination: Int) {
-        var revisedWatchlist: [Stock] = watchlist.map { $0 }
-        revisedWatchlist.move(fromOffsets: source, toOffset: destination )
-        for reverseIndex in stride(from: revisedWatchlist.count - 1, through: 0, by: -1) {
-            revisedWatchlist[reverseIndex].userOrder = Int16(reverseIndex)
-        }
-        save()
-    }
-
-    func save() {
-        let context = container.viewContext
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-            }
-            fetch()
-        }
     }
 }
