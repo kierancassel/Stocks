@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct StockView: View {
-    @EnvironmentObject private var viewModel: StockViewModel
+    @StateObject var viewModel: StockViewModel
     @State private var isEditing = false
     let autoUpdate = Timer.publish(every: 2, on: .main, in: .common).autoconnect()
 
@@ -46,11 +46,13 @@ struct StockView: View {
                 }
                 .onReceive(autoUpdate, perform: { _ in
                     viewModel.updateStocks()
+                    viewModel.getStocks()
                 })
                 .alert("An error occured", isPresented: $viewModel.error) {
                     Button("OK", role: .cancel) { viewModel.error = false}
                 }
             }
+            .onAppear { viewModel.getStocks() }
         }
     }
 
@@ -65,9 +67,13 @@ struct StockView: View {
                     Image(systemName: "pencil.circle.fill")
                 }
             })
-            NavigationLink(destination: AddStockView()) {
-                Image(systemName: "plus.circle.fill")
-            }
+            NavigationLink(destination: AddStockView(viewModel: AddStockViewModel(
+                dataService: IEXService(
+                    networkManager: NetworkManager(),
+                    symbolService: SymbolService()
+                )))) {
+                    Image(systemName: "plus.circle.fill")
+                }
         }
     }
 
@@ -86,6 +92,10 @@ struct StockView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        StockView().environmentObject(StockViewModel(dataService: IEXService(networkManager: NetworkManager())))
+        StockView(viewModel: StockViewModel(
+            dataService: IEXService(
+                networkManager: NetworkManager(),
+                stockService: StockService()
+            )))
     }
 }

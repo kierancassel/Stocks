@@ -8,11 +8,11 @@
 import Foundation
 import Combine
 
-protocol NetworkManagerProtocol {
+protocol Networkable {
     func request(url: URL) -> AnyPublisher<Data, Error>
 }
 
-class NetworkManager: NetworkManagerProtocol {
+class NetworkManager: Networkable {
     func request(url: URL) -> AnyPublisher<Data, Error> {
         return URLSession.shared.dataTaskPublisher(for: url)
             .subscribe(on: DispatchQueue.global())

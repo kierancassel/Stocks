@@ -1,5 +1,5 @@
 //
-//  StockDataService.swift
+//  DataService.swift
 //  Stocks
 //
 //  Created by Kieran Cassel on 06/10/2022.
@@ -8,10 +8,21 @@
 import Foundation
 import Combine
 
-protocol StockDataService {
-    func getSymbols() -> AnyPublisher<Symbols, Error>
+protocol DataService { }
+
+protocol SymbolDataService: DataService {
+    func getSymbols() -> AnyPublisher<[SymbolEntity], Error>
     func getQuote(symbol: String) -> AnyPublisher<Quote, Error>
     func getLogo(symbol: String) -> AnyPublisher<Logo, Error>
+    func addStock(symbol: String, name: String, logoURL: String)
+}
+
+protocol StockDataService: DataService {
+    func getQuote(symbol: String) -> AnyPublisher<Quote, Error>
+    func updateStocks(stockQuotes: [Stock: Quote])
+    func deleteStock(stock: Stock)
+    func getStocks() -> [Stock]
+    func moveStock(watchlist: [Stock], source: IndexSet, destination: Int)
 }
 
 enum StockDataServiceError: LocalizedError {

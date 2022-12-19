@@ -10,6 +10,7 @@ import SwiftUI
 struct StockDetailView: View {
     var stock: Stock
     var changeColor: Color { stock.changePercent > 0 ? .green : .red }
+
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -42,7 +43,7 @@ struct StockDetailView: View {
 struct StockDetailView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            StockDetailView(stock: CoreDataService.previewStock)
+            StockDetailView(stock: CoreDataManager.previewStock)
         }
     }
 }

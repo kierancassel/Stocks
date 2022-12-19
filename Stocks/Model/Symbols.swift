@@ -7,10 +7,16 @@
 
 import Foundation
 
-struct SymbolElement: Codable {
+struct SymbolElement: Decodable {
     let symbol: String
     let name, date: String
     let isEnabled: Bool
+}
+
+extension SymbolElement {
+    func symbolEntityMapper() -> SymbolEntity {
+        return SymbolEntity(name: name, symbol: symbol)
+    }
 }
 
 typealias Symbols = [SymbolElement]

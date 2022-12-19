@@ -9,12 +9,13 @@ import SwiftUI
 
 @main
 struct StocksApp: App {
-    let coreDataService = CoreDataService.shared
-
     var body: some Scene {
         WindowGroup {
-            StockView()
-                .environmentObject(StockViewModel(dataService: IEXService(networkManager: NetworkManager())))
+            StockView(viewModel: StockViewModel(
+                dataService: IEXService(
+                    networkManager: NetworkManager(),
+                    stockService: StockService()
+                )))
         }
     }
 }
