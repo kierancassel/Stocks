@@ -10,19 +10,18 @@ import Combine
 
 protocol DataService { }
 
-protocol SymbolDataService: DataService {
-    func getSymbols() -> AnyPublisher<[SymbolEntity], Error>
-    func getQuote(symbol: String) -> AnyPublisher<Quote, Error>
-    func getLogo(symbol: String) -> AnyPublisher<Logo, Error>
-    func addStock(symbol: String, name: String, logoURL: String)
-}
-
 protocol StockDataService: DataService {
     func getQuote(symbol: String) -> AnyPublisher<Quote, Error>
-    func updateStocks(stockQuotes: [Stock: Quote])
+    func updateStocks()
     func deleteStock(stock: Stock)
     func getStocks() -> [Stock]
-    func moveStock(watchlist: [Stock], source: IndexSet, destination: Int)
+    func moveStock()
+}
+
+protocol SymbolDataService: DataService {
+    func getSymbols() -> AnyPublisher<[SymbolEntity], Error>
+    func getLogo(symbol: String) -> AnyPublisher<Logo, Error>
+    func addStock(symbol: String, name: String, logoURL: String)
 }
 
 enum StockDataServiceError: LocalizedError {

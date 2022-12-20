@@ -27,13 +27,6 @@ extension Stock {
             return []
         }
     }
-    static func updateStocks(stockQuotes: [Stock: Quote]) {
-        for (stock, quote) in stockQuotes {
-            stock.price = quote.latestPrice ?? 0
-            stock.change = quote.change ?? 0
-            stock.changePercent = (quote.changePercent ?? 0) * 100
-        }
-    }
     static func moveStock(watchlist: [Stock], source: IndexSet, destination: Int) {
         var revisedWatchlist: [Stock] = watchlist.map { $0 }
         revisedWatchlist.move(fromOffsets: source, toOffset: destination )

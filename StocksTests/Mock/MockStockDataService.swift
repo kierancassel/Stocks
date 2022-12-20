@@ -10,15 +10,26 @@ import Combine
 @testable import Stocks
 
 class MockStockDataService: StockDataService {
-    func getSymbols() -> AnyPublisher<Symbols, Error> {
-        let dummySymbols = Symbols(
-            [SymbolElement(symbol: "AAPL", name: "Apple Inc", date: "2022-12-14", isEnabled: true),
-             SymbolElement(symbol: "MSFT", name: "Microsoft Corporation", date: "2022-12-14", isEnabled: true),
-             SymbolElement(symbol: "GOOGL", name: "Alphabet Inc - Class A", date: "2022-12-14", isEnabled: true),
-             SymbolElement(symbol: "AMZN", name: "Amazon.com Inc.", date: "2022-12-14", isEnabled: true)])
-        return Result.Publisher(dummySymbols).eraseToAnyPublisher()
+    func updateStocks() {}
+    func deleteStock(stock: Stock) {}
+    func getStocks() -> [Stock] {
+        let stock1 = Stock(context: CoreDataManager.shared.container.viewContext)
+        stock1.symbol = "AAPL"
+        stock1.name = "Apple Inc"
+        stock1.logoURL = "https://storage.googleapis.com/iexcloud-hl37opg/api/logos/AAPL.png"
+        stock1.price = 99.0
+        stock1.userOrder = 0
+        stock1.changePercent = 1.0
+        let stock2 = Stock(context: CoreDataManager.shared.container.viewContext)
+        stock2.symbol = "MSFT"
+        stock2.name = "Microsoft Corporation"
+        stock2.logoURL = "https://storage.googleapis.com/iexcloud-hl37opg/api/logos/MSFT.png"
+        stock2.price = 200.0
+        stock2.userOrder = 1
+        stock2.changePercent = 3.0
+        return [stock1, stock2]
     }
-
+    func moveStock() {}
     func getQuote(symbol: String) -> AnyPublisher<Quote, Error> {
         let dummyQuote = Quote(
             avgTotalVolume: nil,
@@ -50,10 +61,5 @@ class MockStockDataService: StockDataService {
             isUSMarketOpen: nil
         )
         return Result.Publisher(dummyQuote).eraseToAnyPublisher()
-    }
-
-    func getLogo(symbol: String) -> AnyPublisher<Logo, Error> {
-        let dummyLogo = Logo(url: "https://storage.googleapis.com/iexcloud-hl37opg/api/logos/AAPL.png")
-        return Result.Publisher(dummyLogo).eraseToAnyPublisher()
     }
 }

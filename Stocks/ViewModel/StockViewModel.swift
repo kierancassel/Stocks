@@ -20,7 +20,6 @@ class StockViewModel: ObservableObject {
         watchlist = dataService.getStocks()
     }
     func updateStocks() {
-        var stockQuotes: [Stock: Quote] = [:]
         let updateGroup = DispatchGroup()
         watchlist.forEach { stock in
             updateGroup.enter()
@@ -28,20 +27,28 @@ class StockViewModel: ObservableObject {
             dataService.getQuote(symbol: symbol)
                 .sink { self.handleCompletion(completion: $0) }
             receiveValue: {
-                stockQuotes[stock] = $0
+                stock.price = $0.latestPrice ?? 0
+                stock.change = $0.change ?? 0
+                stock.changePercent = ($0.changePercent ?? 0) * 100
                 updateGroup.leave()
             }.cancel()
         }
         updateGroup.notify(queue: .main) {
-            self.dataService.updateStocks(stockQuotes: stockQuotes)
+            self.dataService.updateStocks()
         }
     }
     func moveStock(source: IndexSet, destination: Int) {
-        dataService.moveStock(watchlist: watchlist, source: source, destination: destination)
+        var revisedWatchlist: [Stock] = watchlist.map { $0 }
+        revisedWatchlist.move(fromOffsets: source, toOffset: destination )
+        for reverseIndex in stride(from: revisedWatchlist.count - 1, through: 0, by: -1) {
+            revisedWatchlist[reverseIndex].userOrder = Int16(reverseIndex)
+        }
+        dataService.moveStock()
     }
     func deleteStocks(offsets: IndexSet) {
         guard let index = offsets.first else { return }
         let stock = watchlist[index]
+        watchlist.remove(at: index)
         dataService.deleteStock(stock: stock)
     }
 

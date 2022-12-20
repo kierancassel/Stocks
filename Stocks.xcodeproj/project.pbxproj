@@ -28,15 +28,20 @@
 		CCB9BDFA2948A8B900004B59 /* Symbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB9BDF92948A8B900004B59 /* Symbols.swift */; };
 		CCB9BDFC2948E4B600004B59 /* Logo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB9BDFB2948E4B600004B59 /* Logo.swift */; };
 		CCB9BDFE2949DC8900004B59 /* MockNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB9BDFD2949DC8900004B59 /* MockNetworkManager.swift */; };
-		CCB9BE00294A17C900004B59 /* IEXServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB9BDFF294A17C900004B59 /* IEXServiceTests.swift */; };
+		CCB9BE00294A17C900004B59 /* IEXServiceSymbolTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB9BDFF294A17C900004B59 /* IEXServiceSymbolTests.swift */; };
 		CCB9BE03294A214200004B59 /* Symbols.json in Resources */ = {isa = PBXBuildFile; fileRef = CCB9BE02294A214200004B59 /* Symbols.json */; };
 		CCB9BE05294A2DA600004B59 /* Quote.json in Resources */ = {isa = PBXBuildFile; fileRef = CCB9BE04294A2DA600004B59 /* Quote.json */; };
 		CCB9BE07294A2DE500004B59 /* Logo.json in Resources */ = {isa = PBXBuildFile; fileRef = CCB9BE06294A2DE500004B59 /* Logo.json */; };
+		CCC0F9002950C80C003B9D13 /* AddStockViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC0F8FF2950C80C003B9D13 /* AddStockViewModelTests.swift */; };
+		CCC0F9022950C983003B9D13 /* MockSymbolDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC0F9012950C983003B9D13 /* MockSymbolDataService.swift */; };
+		CCC0F9042950D9B9003B9D13 /* MockSymbolService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC0F9032950D9B9003B9D13 /* MockSymbolService.swift */; };
+		CCC0F9062950D9C9003B9D13 /* MockStockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC0F9052950D9C9003B9D13 /* MockStockService.swift */; };
+		CCC0F9082951C282003B9D13 /* MockStockDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC0F9072951C282003B9D13 /* MockStockDataService.swift */; };
+		CCC0F90A2951E000003B9D13 /* IEXServiceStockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC0F9092951E000003B9D13 /* IEXServiceStockTests.swift */; };
 		CCE6731928EC7A93006C377F /* AddStockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE6731828EC7A93006C377F /* AddStockView.swift */; };
 		CCE6732328EF0923006C377F /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE6732228EF0923006C377F /* DataService.swift */; };
 		CCE6732B28F00D7E006C377F /* StockDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE6732A28F00D7D006C377F /* StockDetailView.swift */; };
 		CCF2E09828F338F5007EC0E0 /* StockViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCF2E09728F338F5007EC0E0 /* StockViewModelTests.swift */; };
-		CCF2E09A28F33956007EC0E0 /* MockStockDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCF2E09928F33956007EC0E0 /* MockStockDataService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,16 +79,21 @@
 		CCB9BDF92948A8B900004B59 /* Symbols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Symbols.swift; sourceTree = "<group>"; };
 		CCB9BDFB2948E4B600004B59 /* Logo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logo.swift; sourceTree = "<group>"; };
 		CCB9BDFD2949DC8900004B59 /* MockNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkManager.swift; sourceTree = "<group>"; };
-		CCB9BDFF294A17C900004B59 /* IEXServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IEXServiceTests.swift; sourceTree = "<group>"; };
+		CCB9BDFF294A17C900004B59 /* IEXServiceSymbolTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IEXServiceSymbolTests.swift; sourceTree = "<group>"; };
 		CCB9BE02294A214200004B59 /* Symbols.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Symbols.json; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.json; };
 		CCB9BE04294A2DA600004B59 /* Quote.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Quote.json; sourceTree = "<group>"; };
 		CCB9BE06294A2DE500004B59 /* Logo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Logo.json; sourceTree = "<group>"; };
+		CCC0F8FF2950C80C003B9D13 /* AddStockViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStockViewModelTests.swift; sourceTree = "<group>"; };
+		CCC0F9012950C983003B9D13 /* MockSymbolDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSymbolDataService.swift; sourceTree = "<group>"; };
+		CCC0F9032950D9B9003B9D13 /* MockSymbolService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSymbolService.swift; sourceTree = "<group>"; };
+		CCC0F9052950D9C9003B9D13 /* MockStockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockStockService.swift; sourceTree = "<group>"; };
+		CCC0F9072951C282003B9D13 /* MockStockDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockStockDataService.swift; sourceTree = "<group>"; };
+		CCC0F9092951E000003B9D13 /* IEXServiceStockTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IEXServiceStockTests.swift; sourceTree = "<group>"; };
 		CCE6731828EC7A93006C377F /* AddStockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStockView.swift; sourceTree = "<group>"; };
 		CCE6732228EF0923006C377F /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		CCE6732A28F00D7D006C377F /* StockDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDetailView.swift; sourceTree = "<group>"; };
 		CCE6733028F02B8C006C377F /* StocksTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StocksTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCF2E09728F338F5007EC0E0 /* StockViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockViewModelTests.swift; sourceTree = "<group>"; };
-		CCF2E09928F33956007EC0E0 /* MockStockDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockStockDataService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,7 +205,10 @@
 		CCB9BE01294A17CD00004B59 /* Mock */ = {
 			isa = PBXGroup;
 			children = (
-				CCF2E09928F33956007EC0E0 /* MockStockDataService.swift */,
+				CCC0F9072951C282003B9D13 /* MockStockDataService.swift */,
+				CCC0F9012950C983003B9D13 /* MockSymbolDataService.swift */,
+				CCC0F9052950D9C9003B9D13 /* MockStockService.swift */,
+				CCC0F9032950D9B9003B9D13 /* MockSymbolService.swift */,
 				CCB9BDFD2949DC8900004B59 /* MockNetworkManager.swift */,
 				CCB9BE02294A214200004B59 /* Symbols.json */,
 				CCB9BE04294A2DA600004B59 /* Quote.json */,
@@ -250,7 +263,9 @@
 			isa = PBXGroup;
 			children = (
 				CCF2E09728F338F5007EC0E0 /* StockViewModelTests.swift */,
-				CCB9BDFF294A17C900004B59 /* IEXServiceTests.swift */,
+				CCC0F8FF2950C80C003B9D13 /* AddStockViewModelTests.swift */,
+				CCC0F9092951E000003B9D13 /* IEXServiceStockTests.swift */,
+				CCB9BDFF294A17C900004B59 /* IEXServiceSymbolTests.swift */,
 				CCB9BE01294A17CD00004B59 /* Mock */,
 			);
 			path = StocksTests;
@@ -410,9 +425,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				CCB9BDFE2949DC8900004B59 /* MockNetworkManager.swift in Sources */,
-				CCF2E09A28F33956007EC0E0 /* MockStockDataService.swift in Sources */,
-				CCB9BE00294A17C900004B59 /* IEXServiceTests.swift in Sources */,
+				CCC0F9042950D9B9003B9D13 /* MockSymbolService.swift in Sources */,
+				CCB9BE00294A17C900004B59 /* IEXServiceSymbolTests.swift in Sources */,
+				CCC0F90A2951E000003B9D13 /* IEXServiceStockTests.swift in Sources */,
 				CCF2E09828F338F5007EC0E0 /* StockViewModelTests.swift in Sources */,
+				CCC0F9002950C80C003B9D13 /* AddStockViewModelTests.swift in Sources */,
+				CCC0F9062950D9C9003B9D13 /* MockStockService.swift in Sources */,
+				CCC0F9082951C282003B9D13 /* MockStockDataService.swift in Sources */,
+				CCC0F9022950C983003B9D13 /* MockSymbolDataService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

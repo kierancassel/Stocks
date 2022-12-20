@@ -9,7 +9,7 @@ import Foundation
 import Combine
 @testable import Stocks
 
-class MockNetworkManager: NetworkManagerProtocol {
+class MockNetworkManager: Networkable {
     func request(url: URL) -> AnyPublisher<Data, Error> {
         var resource: String
         if url.absoluteString.contains("/ref-data/symbols") { resource = "Symbols" } else

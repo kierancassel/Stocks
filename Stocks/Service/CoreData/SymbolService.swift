@@ -8,13 +8,13 @@
 import Foundation
 
 protocol SymbolServicable {
-    func getSymbol() -> [Symbol]
+    func getSymbols() -> [Symbol]
     func addSymbols(symbols: Symbols)
     func addStock(symbol: String, name: String, logoURL: String)
 }
 
 extension SymbolServicable {
-    func getSymbol() -> [Symbol] {
+    func getSymbols() -> [Symbol] {
         Symbol.getSymbols(moc: CoreDataManager.shared.container.viewContext)
     }
     func addSymbols(symbols: Symbols) {
@@ -24,6 +24,7 @@ extension SymbolServicable {
     func addStock(symbol: String, name: String, logoURL: String) {
         Stock.addStock(symbol: symbol, name: name, logoURL: logoURL,
                        moc: CoreDataManager.shared.container.viewContext)
+        CoreDataManager.shared.save()
     }
 }
 class SymbolService: SymbolServicable {}

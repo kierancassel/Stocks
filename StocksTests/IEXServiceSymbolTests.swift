@@ -10,15 +10,16 @@ import XCTest
 
 final class IEXServiceTest: XCTestCase {
 
-    let networkManager = MockNetworkManager()
     var iexService: IEXService!
+    let networkManager = MockNetworkManager()
+    let symbolService = MockSymbolService()
 
     override func setUpWithError() throws {
-        iexService = IEXService(networkManager: networkManager)
+        iexService = IEXService(networkManager: networkManager, symbolService: symbolService)
     }
 
     func testGetSymbols() throws {
-        var symbols: Symbols?
+        var symbols: [SymbolEntity]?
         let expectation = self.expectation(description: "Get Symbols")
         iexService.getSymbols().sink { completion in
             if case let .failure(error) = completion {
@@ -29,24 +30,8 @@ final class IEXServiceTest: XCTestCase {
             symbols = data
         }.cancel()
         waitForExpectations(timeout: 1)
-        XCTAssert(symbols!.count == 11515)
-    }
-
-    func testGetQuote() throws {
-        var quote: Quote?
-        let expectation = self.expectation(description: "Get Quote")
-        iexService.getQuote(symbol: "AAPL")
-            .sink { completion in
-                if case let .failure(error) = completion {
-                    XCTFail(error.localizedDescription)
-                }
-                expectation.fulfill()
-            } receiveValue: { data in
-                quote = data
-            }.cancel()
-        waitForExpectations(timeout: 1)
-        XCTAssert(quote!.symbol == "AAPL")
-        XCTAssert(quote!.latestPrice == 145.745)
+        XCTAssertEqual(symbols?.first?.name, "Prudential Financial Inc. - 5.95% NT REDEEM 01/09/2062 USD 25")
+        XCTAssertEqual(symbols?.count, 11515)
     }
 
     func testGetLogo() throws {

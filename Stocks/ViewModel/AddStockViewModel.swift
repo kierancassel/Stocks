@@ -13,7 +13,7 @@ class AddStockViewModel: ObservableObject {
     @Published var searchTerm = ""
     @Published var error: Bool = false
     private let dataService: SymbolDataService
-    private var cancellables = Set<AnyCancellable>()
+
     init(dataService: SymbolDataService) {
         self.dataService = dataService
     }

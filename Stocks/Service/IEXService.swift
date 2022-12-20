@@ -10,16 +10,16 @@ import Combine
 
 class IEXService {
     private let networkManager: Networkable
-    private var symbolService: SymbolServicable?
     private var stockService: StockServicable?
+    private var symbolService: SymbolServicable?
 
-    init(networkManager: Networkable, symbolService: SymbolServicable) {
-        self.networkManager = networkManager
-        self.symbolService = symbolService
-    }
     init(networkManager: Networkable, stockService: StockServicable) {
         self.networkManager = networkManager
         self.stockService = stockService
+    }
+    init(networkManager: Networkable, symbolService: SymbolServicable) {
+        self.networkManager = networkManager
+        self.symbolService = symbolService
     }
 }
 
@@ -38,8 +38,8 @@ extension IEXService: StockDataService {
             }
             .eraseToAnyPublisher()
     }
-    func updateStocks(stockQuotes: [Stock: Quote]) {
-        stockService?.updateStocks(stockQuotes: stockQuotes)
+    func updateStocks() {
+        stockService?.updateStocks()
     }
     func deleteStock(stock: Stock) {
         stockService?.deleteStock(stock: stock)
@@ -47,13 +47,14 @@ extension IEXService: StockDataService {
     func getStocks() -> [Stock] {
         stockService?.getStocks() ?? []
     }
-    func moveStock(watchlist: [Stock], source: IndexSet, destination: Int) {
-        stockService?.moveStock(watchlist: watchlist, source: source, destination: destination)
+    func moveStock() {
+        stockService?.moveStock()
     }
 }
+
 extension IEXService: SymbolDataService {
     func getSymbols() -> AnyPublisher<[SymbolEntity], Error> {
-        let symbols = symbolService?.getSymbol() ?? []
+        let symbols = symbolService?.getSymbols() ?? []
         guard symbols.count == 0 else {
             return Just(symbols)
                 .map { symbols in
