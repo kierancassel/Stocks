@@ -38,9 +38,6 @@ class CoreDataManager {
     static var preview: CoreDataManager = {
         let result = CoreDataManager(inMemory: true)
         let viewContext = result.container.viewContext
-        for _ in 0..<10 {
-            let newStocks = Stock(context: viewContext)
-        }
         do {
             try viewContext.save()
         } catch {
@@ -53,7 +50,7 @@ class CoreDataManager {
         let viewContext = CoreDataManager.preview.container.viewContext
         let stock = Stock(context: viewContext)
         stock.symbol = "AAPL"
-        stock.name = "Apple Inc."
+        stock.name = "Apple Inc"
         stock.price = 140
         stock.changePercent = 1.99
         stock.logoURL = "https://storage.googleapis.com/iexcloud-hl37opg/api/logos/AAPL.png"

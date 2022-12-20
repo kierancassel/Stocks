@@ -38,6 +38,10 @@
 		CCC0F9062950D9C9003B9D13 /* MockStockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC0F9052950D9C9003B9D13 /* MockStockService.swift */; };
 		CCC0F9082951C282003B9D13 /* MockStockDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC0F9072951C282003B9D13 /* MockStockDataService.swift */; };
 		CCC0F90A2951E000003B9D13 /* IEXServiceStockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC0F9092951E000003B9D13 /* IEXServiceStockTests.swift */; };
+		CCC0F90E2951EAA0003B9D13 /* CoreDataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC0F90D2951EAA0003B9D13 /* CoreDataManagerTests.swift */; };
+		CCC0F9102951F292003B9D13 /* Stock+ExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC0F90F2951F292003B9D13 /* Stock+ExtensionTests.swift */; };
+		CCC0F9122951F2A3003B9D13 /* Symbol+ExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC0F9112951F2A3003B9D13 /* Symbol+ExtensionTests.swift */; };
+		CCC0F9182951FA86003B9D13 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CCC0F91A2951FA86003B9D13 /* Localizable.strings */; };
 		CCE6731928EC7A93006C377F /* AddStockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE6731828EC7A93006C377F /* AddStockView.swift */; };
 		CCE6732328EF0923006C377F /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE6732228EF0923006C377F /* DataService.swift */; };
 		CCE6732B28F00D7E006C377F /* StockDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE6732A28F00D7D006C377F /* StockDetailView.swift */; };
@@ -89,6 +93,10 @@
 		CCC0F9052950D9C9003B9D13 /* MockStockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockStockService.swift; sourceTree = "<group>"; };
 		CCC0F9072951C282003B9D13 /* MockStockDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockStockDataService.swift; sourceTree = "<group>"; };
 		CCC0F9092951E000003B9D13 /* IEXServiceStockTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IEXServiceStockTests.swift; sourceTree = "<group>"; };
+		CCC0F90D2951EAA0003B9D13 /* CoreDataManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManagerTests.swift; sourceTree = "<group>"; };
+		CCC0F90F2951F292003B9D13 /* Stock+ExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Stock+ExtensionTests.swift"; sourceTree = "<group>"; };
+		CCC0F9112951F2A3003B9D13 /* Symbol+ExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Symbol+ExtensionTests.swift"; sourceTree = "<group>"; };
+		CCC0F9192951FA86003B9D13 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CCE6731828EC7A93006C377F /* AddStockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStockView.swift; sourceTree = "<group>"; };
 		CCE6732228EF0923006C377F /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		CCE6732A28F00D7D006C377F /* StockDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDetailView.swift; sourceTree = "<group>"; };
@@ -177,6 +185,8 @@
 		CC565C1C29507D93008E7CDD /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				CCE6732228EF0923006C377F /* DataService.swift */,
+				CCB9BDEF2947A0F600004B59 /* IEXService.swift */,
 				CC565C1D29507DC3008E7CDD /* NetworkManager.swift */,
 			);
 			path = Network;
@@ -188,6 +198,7 @@
 				CCB9BDE82943A74300004B59 /* Config */,
 				CC040BE828E725E10051A217 /* Assets.xcassets */,
 				CC040BEA28E725E10051A217 /* Preview Content */,
+				CCC0F91A2951FA86003B9D13 /* Localizable.strings */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -217,13 +228,30 @@
 			path = Mock;
 			sourceTree = "<group>";
 		};
+		CCC0F9132951F2C9003B9D13 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				CCC0F90D2951EAA0003B9D13 /* CoreDataManagerTests.swift */,
+				CCC0F90F2951F292003B9D13 /* Stock+ExtensionTests.swift */,
+				CCC0F9112951F2A3003B9D13 /* Symbol+ExtensionTests.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		CCC0F9142951F2F6003B9D13 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				CCC0F9092951E000003B9D13 /* IEXServiceStockTests.swift */,
+				CCB9BDFF294A17C900004B59 /* IEXServiceSymbolTests.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
 		CCE6732428EF0962006C377F /* Service */ = {
 			isa = PBXGroup;
 			children = (
 				CC565C1B29507D36008E7CDD /* CoreData */,
 				CC565C1C29507D93008E7CDD /* Network */,
-				CCE6732228EF0923006C377F /* DataService.swift */,
-				CCB9BDEF2947A0F600004B59 /* IEXService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -264,8 +292,8 @@
 			children = (
 				CCF2E09728F338F5007EC0E0 /* StockViewModelTests.swift */,
 				CCC0F8FF2950C80C003B9D13 /* AddStockViewModelTests.swift */,
-				CCC0F9092951E000003B9D13 /* IEXServiceStockTests.swift */,
-				CCB9BDFF294A17C900004B59 /* IEXServiceSymbolTests.swift */,
+				CCC0F9132951F2C9003B9D13 /* CoreData */,
+				CCC0F9142951F2F6003B9D13 /* Network */,
 				CCB9BE01294A17CD00004B59 /* Mock */,
 			);
 			path = StocksTests;
@@ -354,6 +382,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CC040BEC28E725E10051A217 /* Preview Assets.xcassets in Resources */,
+				CCC0F9182951FA86003B9D13 /* Localizable.strings in Resources */,
 				CC040BE928E725E10051A217 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -424,12 +453,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CCC0F9122951F2A3003B9D13 /* Symbol+ExtensionTests.swift in Sources */,
 				CCB9BDFE2949DC8900004B59 /* MockNetworkManager.swift in Sources */,
 				CCC0F9042950D9B9003B9D13 /* MockSymbolService.swift in Sources */,
 				CCB9BE00294A17C900004B59 /* IEXServiceSymbolTests.swift in Sources */,
+				CCC0F90E2951EAA0003B9D13 /* CoreDataManagerTests.swift in Sources */,
 				CCC0F90A2951E000003B9D13 /* IEXServiceStockTests.swift in Sources */,
 				CCF2E09828F338F5007EC0E0 /* StockViewModelTests.swift in Sources */,
 				CCC0F9002950C80C003B9D13 /* AddStockViewModelTests.swift in Sources */,
+				CCC0F9102951F292003B9D13 /* Stock+ExtensionTests.swift in Sources */,
 				CCC0F9062950D9C9003B9D13 /* MockStockService.swift in Sources */,
 				CCC0F9082951C282003B9D13 /* MockStockDataService.swift in Sources */,
 				CCC0F9022950C983003B9D13 /* MockSymbolDataService.swift in Sources */,
@@ -445,6 +477,17 @@
 			targetProxy = CCE6733428F02B8C006C377F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		CCC0F91A2951FA86003B9D13 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CCC0F9192951FA86003B9D13 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		CC040BF228E725E10051A217 /* Debug */ = {
@@ -575,7 +618,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Stocks/Resource/Config/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -587,9 +629,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = edu.kierancassel.Stocks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -606,7 +651,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Stocks/Resource/Config/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -618,9 +662,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = edu.kierancassel.Stocks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

@@ -51,19 +51,15 @@ extension IEXService: StockDataService {
         stockService?.moveStock()
     }
 }
-
 extension IEXService: SymbolDataService {
     func getSymbols() -> AnyPublisher<[SymbolEntity], Error> {
         let symbols = symbolService?.getSymbols() ?? []
         guard symbols.count == 0 else {
-            return Just(symbols)
+            return Result.Publisher(symbols)
                 .map { symbols in
                     symbols.map {
                         $0.symbolEntityMapper()
                     }
-                }
-                .mapError { error -> StockDataServiceError  in
-                    StockDataServiceError.genericError(error.localizedDescription)
                 }.eraseToAnyPublisher()
         }
         guard let url = URL(string: AppConfig.apiURL + "/ref-data/symbols" + "?token=" + AppConfig.apiKey)

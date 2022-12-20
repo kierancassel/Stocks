@@ -27,11 +27,4 @@ extension Stock {
             return []
         }
     }
-    static func moveStock(watchlist: [Stock], source: IndexSet, destination: Int) {
-        var revisedWatchlist: [Stock] = watchlist.map { $0 }
-        revisedWatchlist.move(fromOffsets: source, toOffset: destination )
-        for reverseIndex in stride(from: revisedWatchlist.count - 1, through: 0, by: -1) {
-            revisedWatchlist[reverseIndex].userOrder = Int16(reverseIndex)
-        }
-    }
 }

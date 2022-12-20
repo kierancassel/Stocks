@@ -48,7 +48,7 @@ struct StockView: View {
                     viewModel.updateStocks()
                     viewModel.getStocks()
                 })
-                .alert("An error occured", isPresented: $viewModel.error) {
+                .alert("General_Error", isPresented: $viewModel.error) {
                     Button("OK", role: .cancel) { viewModel.error = false}
                 }
             }

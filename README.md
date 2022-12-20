@@ -17,6 +17,7 @@ XCTest unit tests with mocking.
 Uses Core Data to store user watchlist and symbol search.
 
 ## UI Screens
+Uses localizable to support additional languages.
 ### Watchlist
 ![Simulator Screen Shot - iPhone 14 - 2022-12-20 at 14 29 51](https://user-images.githubusercontent.com/3631143/208690773-dc1992b5-c710-4160-b3fa-28bd7ddd762c.png)
 ### Stock search

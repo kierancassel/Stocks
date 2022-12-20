@@ -6,7 +6,6 @@
 //
 
 import XCTest
-import CoreData
 @testable import Stocks
 
 final class CoreDataManagerTests: XCTestCase {

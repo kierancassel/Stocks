@@ -5,3 +5,12 @@
   Created by Kieran Cassel on 20/12/2022.
   
 */
+
+"Stocks" = "Stocks";
+"Watchlist" = "Watchlist";
+"Watchlist empty" = "Watchlist empty";
+"Done" = "Done";
+"OK" = "OK";
+"General_Error" = "An error occured";
+"Search for stock" = "Search for stock";
+"No results found" = "No results found";
